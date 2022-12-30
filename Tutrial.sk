@@ -1,33 +1,66 @@
 #仅适用于学习
 
 on join:
-	set {tutorial::%player%} to false
+    set {tutorial::%player%} to false
 on player move:
-	if {tutorial::%player%} is true:
-		cancel event
+    if {tutorial::%player%} is true:
+        cancel event
 
 on rightclick:
-	if {tutorial::%player%} is true:
-		cancel event
+    if {tutorial::%player%} is true:
+        cancel event
 
-command /starttutorial:
-	trigger:
-		set {tutorial::%player%} to true
-		apply potion of blindness 1 to player for 999999 days
-		message ""
-		message "<##DCe8f4>您好这里是 游玩教程 请问您需要了解些什么？"
-		message "          <##7E8be8>(下方选项都可以点击)"
-		message ""
-		message "<##F2A3F3>[小镇相关]"
-		message "<##F2A3F3>[赚钱相关]"
-		message "<command:/stoptutorial><##F2A3F3>[结束教程]"
-		message ""
+command /tutorial [<text>]:
+    trigger:
+        if arg-1 is "start":
+            set {tutorial::%player%} to true
+            apply potion of blindness 1 to player for 999999 days
+            message ""
+            message ""
+            message ""
+            message "<##DCe8f4>您好这里是 游玩教程 请问您需要了解些什么？"
+            message "          <##7E8be8>(下方选项都可以点击)"
+            message ""
+            message ""
+            message ""
+            message "<command:/tutorial towny><##F2A3F3>[小镇相关]"
+            message "<command:/tutorial money><##F2A3F3>[赚钱相关]"
+            message "<command:/tutorial stop><##F2A3F3>[结束教程]"
+            message ""
+            message ""
+            message ""
+            
+        if arg-1 is "towny":
+            message ""
+            message "<##DCe8f4>游玩教程"
+            message ""
+            
+        if arg-1 is "money":
+            message ""
+            message ""
+            message ""
+            message "<##DCe8f4>游玩教程"
+            message ""
+            message ""
+            message ""
+            message "<##DCe8f4>在本服中您可以通过 <##F2A3F3>钓鱼 挖掘 挖矿 打怪 农作 <##DCE8F4>来获取金币。"
+            message "<##DCe8f4>您有概率在获取金币的同时会获得职业经验值，经验值达到一定点数会进行升级。"
+            message "<##DCe8f4>等级越高掉落金币的概率越高，金币的数量也会提高。"
+            message "<##DCE8F4>您可以输入 <##7E8BE8>/MH STATS <##DCE8f4>查看自己所有职业的数据。"
+            message ""
+            message ""
+            message ""
+            message "<command:/tutorial start><##F2A3F3>[返回]"
+            message "<command:/tutorial stop><##F2A3F3>[结束教程]"
+            message ""
+            message ""
+            message ""
+            
+        if arg-1 is "stop":
+            set {tutorial::%player%} to false
+            remove blindness from the player
+            message ""
+            message "<##DCe8f4>教程已结束。"
+            message ""
         
-command /stoptutorial:
-	trigger:
-		set {tutorial::%player%} to false
-		remove blindness from the player
-		message ""
-		message "<##DCe8f4>教程已结束。"
-		message ""
         
