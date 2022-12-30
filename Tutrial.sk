@@ -1,0 +1,33 @@
+#仅适用于学习
+
+on join:
+	set {tutorial::%player%} to false
+on player move:
+	if {tutorial::%player%} is true:
+		cancel event
+
+on rightclick:
+	if {tutorial::%player%} is true:
+		cancel event
+
+command /starttutorial:
+	trigger:
+		set {tutorial::%player%} to true
+		apply potion of blindness 1 to player for 999999 days
+		message ""
+		message "<##DCe8f4>您好这里是 游玩教程 请问您需要了解些什么？"
+		message "          <##7E8be8>(下方选项都可以点击)"
+		message ""
+		message "<##F2A3F3>[小镇相关]"
+		message "<##F2A3F3>[赚钱相关]"
+		message "<command:/stoptutorial><##F2A3F3>[结束教程]"
+		message ""
+        
+command /stoptutorial:
+	trigger:
+		set {tutorial::%player%} to false
+		remove blindness from the player
+		message ""
+		message "<##DCe8f4>教程已结束。"
+		message ""
+        
