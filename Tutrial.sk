@@ -32,9 +32,29 @@ command /tutorial [<text>]:
             
         if arg-1 is "towny":
             message ""
+            message ""
+            message ""
             message "<##DCe8f4>游玩教程"
             message ""
-            
+            message ""
+            message ""
+            message "<##DCe8f4>本服主要玩法为城镇生存 您可以在拥有 <##7e8be8>5000 <##Dce8f4>金币后创建一个小镇。"
+            message "<##DCE8F4>也可以直接加入其他玩家的小镇一同建立和谐城镇。"
+            message "<##DCE8F4>当您有了足够金币后您可以输入 <##7e8be8>/town create <小镇名称> <##DCe8f4>来创建一个小镇。"
+            message "<##DCe8f4>再输入<##7e8be8>/claim <##DCE8F4>认领一块区块作为您小镇的第一个区块。"
+            message "<##DcE8f4>详细内容您可以输入 <##7e8be8>/Husktowns help <##DCe8f4>获得帮助。"
+            message ""
+            message ""
+            message ""
+            message "<command:/tutorial start><##F2A3F3>[返回]"
+            message "<command:/tutorial stop><##F2A3F3>[结束教程]"
+            message ""
+            message ""
+            message ""
+
+
+
+
         if arg-1 is "money":
             message ""
             message ""
@@ -60,7 +80,11 @@ command /tutorial [<text>]:
             set {tutorial::%player%} to false
             remove blindness from the player
             message ""
+            message ""
+            message ""
             message "<##DCe8f4>教程已结束。"
+            message ""
+            message ""
             message ""
         
         
