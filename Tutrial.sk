@@ -25,6 +25,7 @@ command /tutorial [<text>]:
             message ""
             message "<command:/tutorial towny><##F2A3F3>[小镇相关]"
             message "<command:/tutorial money><##F2A3F3>[赚钱相关]"
+            message "<command:/tutorial game><##F2a3f3>[开始游戏]"  
             message "<command:/tutorial stop><##F2A3F3>[结束教程]"
             message ""
             message ""
@@ -42,7 +43,7 @@ command /tutorial [<text>]:
             message "<##DCE8F4>也可以直接加入其他玩家的小镇一同建立和谐城镇。"
             message "<##DCE8F4>当您有了足够金币后您可以输入 <##7e8be8>/town create <小镇名称> <##DCe8f4>来创建一个小镇。"
             message "<##DCe8f4>再输入<##7e8be8>/claim <##DCE8F4>认领一块区块作为您小镇的第一个区块。"
-            message "<##DcE8f4>详细内容您可以输入 <##7e8be8>/Husktowns help <##DCe8f4>获得帮助。"
+            message "<##DcE8f4>详细内容您可以输入 <##7e8be8>/husktowns help <##DCe8f4>获得帮助。"
             message ""
             message ""
             message ""
@@ -52,8 +53,25 @@ command /tutorial [<text>]:
             message ""
             message ""
 
-
-
+        if arg-1 is "game":
+            message ""
+            message ""
+            message ""
+            message "<##DCe8f4>游玩教程"
+            message ""
+            message ""
+            message ""
+            message "<##DCE8f4>当您已经读完上面所有教程后，你就可以开始游戏啦，右键出城的传送NPC传送至生存世界吧。"
+            message "<##DCE8f4>基础指令您可以输入 <##7e8be8>/huskhomes help <##DCE8f4>查看帮助。"
+            message "<##DCe8f4>祝您游玩愉快！"
+            message ""
+            message ""
+            message ""
+            message "<command:/tutorial start><##F2A3F3>[返回]"
+            message "<command:/tutorial stop><##F2A3F3>[结束教程]"
+            message ""
+            message ""
+            message ""
 
         if arg-1 is "money":
             message ""
@@ -66,7 +84,7 @@ command /tutorial [<text>]:
             message "<##DCe8f4>在本服中您可以通过 <##F2A3F3>钓鱼 挖掘 挖矿 打怪 农作 <##DCE8F4>来获取金币。"
             message "<##DCe8f4>您有概率在获取金币的同时会获得职业经验值，经验值达到一定点数会进行升级。"
             message "<##DCe8f4>等级越高掉落金币的概率越高，金币的数量也会提高。"
-            message "<##DCE8F4>您可以输入 <##7E8BE8>/MH STATS <##DCE8f4>查看自己所有职业的数据。"
+            message "<##DCE8F4>您可以输入 <##7E8BE8>/mh stats <##DCE8f4>查看自己所有职业的数据。"
             message ""
             message ""
             message ""

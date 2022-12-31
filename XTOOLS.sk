@@ -5,25 +5,29 @@ options:
 on load:
     load yaml "plugins/XTOOLS/message.yml" as "message"
     message ""
-    message "&7[XTOOLS] <##5cf6bd>XTOOLS &7已成功加载。"
+    message "&7[XTOOLS] <##9c78bd>XTOOLS &7已成功加载。"
     message ""
 
     if yaml "message" is empty:
-        set yaml value "Error_NoTpaRequest" from "message" to "&7[&c&l!&7] 无待处理传送请求。"
-        set yaml value "Error_TpaSelf" from "message" to "&7[&c&l!&7] 你不能向自己发送传送申请。"
-        set yaml value "Error_TpaUsageError" from "message" to "&7[&c&l!&7] 正确使用方式: /tpa [玩家]"
-        set yaml value "Error_PlayerOffline" from "message" to "&7[&c&l!&7] 玩家不在线!"
-        set yaml value "Error_Cooldown" from "message" to "&7[&c&l!&7] 抱歉，该指令正在冷却 请等待 &d&l60 &7s"
-        set yaml value "Error_DisableCommand" from "message" to "&7[&c&l!&7] 抱歉，该指令已被服务器禁用。"
-        set yaml value "Error_NoBackLocation" from "message" to "&7[&c&l!&7] 未找到任何死亡位置!"
+        set yaml value "Error_NoPermission" from "message" to "<##E1679C>&l错误！&7您没有权限这么做。"
+        set yaml value "Error_NoTpaRequest" from "message" to "<##E1679C>&l错误！&7无待处理传送请求。"
+        set yaml value "Error_TpaSelf" from "message" to "<##E1679C>&l错误！&7您不能向自己发送传送申请。"
+        set yaml value "Error_TpaUsageError" from "message" to "<##E1679C>&l错误！&7正确使用方式: /tpa [玩家]"
+        set yaml value "Error_WeatherUsageError" from "message" to "<##E1679C>错误！&7正确使用方法 /weather"
+        set yaml value "Error_PlayerOffline" from "message" to "<##E1679C>&l错误！&7玩家不在线!"
+        set yaml value "Error_Cooldown" from "message" to "<##E1679C>&l错误！&7抱歉，该指令正在冷却 请等待 &d&l60 &7s"
+        set yaml value "Error_DisableCommand" from "message" to "<##E1679C>&l错误！&7抱歉，该指令已被服务器禁用。"
+        set yaml value "Error_NoBackLocation" from "message" to "<##E1679C>&l错误！&7未找到任何死亡位置!"
         set yaml value "Back_Deathtip" from "message" to "&7已为您保存死亡地点 &7&l点我传送回上一位置"
         set yaml value "Back_Processing" from "message" to "&7正在返回上一死亡位置 请稍等 &d&l{@delay} &7s"
         set yaml value "Teleport_Complete" from "message" to "&7传送成功!"
         save yaml "message"
         
+        set {Error_NoPermission} to yaml value "Error_NoPermission" from "message"
         set {Error_NoTpaRequest} to yaml value "Error_NoTpaRequest" from "message"
         set {Error_TpaSelf} to yaml value "Error_TpaSelf" from "message"
         set {Error_TpaUsageError} to yaml value "Error_TpaUsageError" from "message"
+        set {Error_WeatherUsageError} to yaml value "Error_WeatherUsageError" from "message"
         set {Error_PlayerOffline} to yaml value "Error_PlayerOffline" from "message"
         set {Error_Cooldown} to yaml value "Error_Cooldown" from "message"
         set {Error_DisableCommand} to yaml value "Error_DisableCommand" from "message"
@@ -33,9 +37,11 @@ on load:
         set {Teleport_Complete} to yaml value "Teleport_Complete" from "message"
         stop
 
+    set {Error_NoPermission} to yaml value "Error_NoPermission" from "message"
     set {Error_NoTpaRequest} to yaml value "Error_NoTpaRequest" from "message"
     set {Error_TpaSelf} to yaml value "Error_TpaSelf" from "message"
     set {Error_TpaUsageError} to yaml value "Error_TpaUsageError" from "message"
+    set {Error_WeatherUsageError} to yaml value "Error_WeatherUsageError" from "message"
     set {Error_PlayerOffline} to yaml value "Error_PlayerOffline" from "message"      
     set {Error_Cooldown} to yaml value "Error_Cooldown" from "message"    
     set {Error_DisableCommand} to yaml value "Error_DisableCommand" from "message"
@@ -44,6 +50,10 @@ on load:
     set {Back_Processing} to yaml value "Back_Processing" from "message"
     set {Teleport_Complete} to yaml value "Teleport_Complete" from "message"
     save yaml "message"
+
+on quit:
+    delete {tpa.%player%}
+    delete {back.%player%}
 
 #禁用指令
 command /me [<text>]:
@@ -136,13 +146,19 @@ command /tpa [<offline player>]:
                         send "处理传送申请已超时!" to arg 1
                         {@line} to arg 1
                 else if arg 1 is {_p}:
+                    {@line}
                     send "%{Error_TpaSelf}%"
+                    {@line}
                     stop
             else if arg 1 is offline:
+                {@line} to player
                 send "%{Error_PlayerOffline}%" to player
+                {@line} to player
                 stop
         else if arg 1 is not set:
+            {@line} 
             send "%{Error_TpaUsageError}%"
+            {@line}
             stop
 
 command /tpaccept:
@@ -171,7 +187,9 @@ command /tpaccept:
                 delete {tpa.%player%}
                 stop
         else if {tpa.%player%} is not set:
+            {@line} to player
             send "%{Error_NoTpaRequest}%" to player
+            {@line} to player
             stop
 
 command /tpdeny:
@@ -187,5 +205,66 @@ command /tpdeny:
             delete {tpa.%player%}
             stop
         if {tpa.%player%} is not set:
+            {@line} 
             send "%{Error_NoTpaRequest}%"
+            {@line}
+            stop
+        
+command /day:
+    permission: YIRIMC.SVIP
+    permission message: %{Error_NoPermission}%
+    trigger:
+        set time to 6:00
+        {@line} to all players
+        send "%player% &7将时间设置为 &f&l白天" to all players
+        {@line} to all players
+        stop
+
+command /night:
+    permission: YIRIMC.SVIP
+    permission message: %{Error_NoPermission}%
+    trigger:
+        set time to 20:00
+        {@line} to all players
+        send "%player% &7将时间设置为 &f&l夜晚" to all players
+        {@line} to all players
+        stop
+
+command /weather [<text>]:
+    permission: YIRIMC.SVIP         
+    permission message: %{Error_NoPermission}%
+    trigger:
+        if arg 1 is set:
+            if arg is "sun":
+                set weather to sunny
+                {@line} to all players
+                send "%player% &7将天气设置为 &f&l晴天" to all players
+                {@line} to all players
+                stop
+            if arg is "rain":
+                set weather to rainy
+                {@line} to all players
+                send "%player% &7将天气设置为 &f&l雨天" to all players
+                {@line} to all players
+                stop
+            if arg is "thunder":
+                set weather to thundering
+                {@line} to all players
+                send "%player% &7将天气设置为 &f&l雷雨" to all players
+                {@line} to all players
+                stop
+            else:
+                {@line}
+                send "%{Error_WeatherUsageError}%"
+                {@line}
+                stop
+        if arg 1 is not set:
+            {@line}
+            send "&7请在下方点击您想设置的天气。"
+            {@line}
+            {@line}
+            send "<command:/weather sun>&f[晴天]"
+            send "<command:/weather rain>&f[雨天]"
+            send "<command:/weather thunder>&f[雷雨]"
+            {@line}
             stop
